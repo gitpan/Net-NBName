@@ -1,12 +1,10 @@
-# Last updated: 2002-12-22 20:30
-
 use strict;
 use warnings;
 
 package Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = "0.23";
+$VERSION = "0.24";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;
@@ -47,7 +45,7 @@ __END__
 
 =head1 NAME
 
-Net::NBName::NameQuery::RR
+Net::NBName::NameQuery::RR - NetBIOS Name Query Response Resource Record
 
 =head1 DESCRIPTION
 
@@ -84,7 +82,7 @@ L<Net::NBName>, L<Net::NBName::NameQuery>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002 James Macfarlane. All rights reserved. This program
+Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
 is free software; you can redistribute it and/or modify it under the same
 terms as Perl itself.
 

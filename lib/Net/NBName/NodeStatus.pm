@@ -1,5 +1,3 @@
-# Last updated: 2002-12-22 20:30
-
 use strict;
 use warnings;
 
@@ -8,7 +6,7 @@ package Net::NBName::NodeStatus;
 use Net::NBName::NodeStatus::RR;
 
 use vars '$VERSION';
-$VERSION = "0.23";
+$VERSION = "0.24";
 
 sub new
 {
@@ -53,7 +51,7 @@ __END__
 
 =head1 NAME
 
-Net::NBName::NodeStatus
+Net::NBName::NodeStatus - NetBIOS Node Status Response
 
 =head1 DESCRIPTION
 
@@ -87,7 +85,7 @@ L<Net::NBName>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002 James Macfarlane. All rights reserved. This program
+Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
 is free software; you can redistribute it and/or modify it under the same
 terms as Perl itself.
 

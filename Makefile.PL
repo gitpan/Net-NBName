@@ -7,7 +7,7 @@ WriteMakefile(
     'PREREQ_PM' => {}, # e.g., Module::Name => 1.1
     ($] >= 5.005 ? ## Add these new keywords supported since 5.005
     (ABSTRACT => 'NetBIOS Name Service Requests',
-     AUTHOR => 'James Macfarlane <jmacfarlane@goodweather.co.uk') : ()),
+     AUTHOR => 'James Macfarlane') : ()),
     # *.pm files will be automatically picked up from . or ./lib
-    'EXE_FILES' => ['bin/namequery.pl', 'bin/nbtstat.pl', 'bin/nbtscan.pl'],
+    'EXE_FILES' => ['bin/namequery.pl', 'bin/nodestat.pl', 'bin/nodescan.pl'],
 );

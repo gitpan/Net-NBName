@@ -1,5 +1,3 @@
-# Last updated: 2002-12-22 20:31
-
 use strict;
 use warnings;
 
@@ -9,7 +7,7 @@ use Net::NBName::NodeStatus;
 use Net::NBName::NameQuery;
 
 use vars '$VERSION';
-$VERSION = "0.23";
+$VERSION = "0.24";
 
 sub new
 {
@@ -350,7 +348,7 @@ as <name>#<suffix> where the suffix should be in hex.
 This example emulates the windows nbtstat -A command. By specifying
 the ip address of the remote host, you can check its NetBIOS Name Table.
 
-"nbtstat.pl 192.168.0.10"
+"nodestat.pl 192.168.0.10"
 
     use Net::NBName;
 
@@ -373,7 +371,7 @@ This example can be used to scan for NetBIOS hosts on a subnet. It uses
 Net::Netmask to parse the subnet parameter and enumerate the hosts in
 that subnet.
 
-"nbtscan.pl 192.168.0.0/24"
+"nodescan.pl 192.168.0.0/24"
 
     use Net::NBName;
     use Net::Netmask;
@@ -461,7 +459,7 @@ if the name is not present.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002 James Macfarlane. All rights reserved. This program
+Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
 is free software; you can redistribute it and/or modify it under the same
 terms as Perl itself.
 

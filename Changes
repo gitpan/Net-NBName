@@ -1,6 +1,11 @@
 Revision history for Net::NBName
 ================================
 
+*** 0.24 2003-01-16
+
+Changed the names of the example scripts "nbtstat.pl" and "nbtscan.pl"
+to "nodestat.pl" and "nodescan.pl".
+
 *** 0.23 2002-12-22
 
 Changed the decoded Net::NBName::NameQuery flags to be 1 or 0,
