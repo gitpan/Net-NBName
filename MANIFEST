@@ -1,0 +1,9 @@
+Changes
+Makefile.PL
+MANIFEST
+lib/Net/NBName.pm
+lib/Net/NBName/NameQuery.pm
+lib/Net/NBName/NameQuery/RR.pm
+lib/Net/NBName/NodeStatus.pm
+lib/Net/NBName/NodeStatus/RR.pm
+README
