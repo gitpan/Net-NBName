@@ -1,4 +1,4 @@
-# Last updated: 2002-12-21 22:43
+# Last updated: 2002-12-22 20:29
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ package Net::NBName::NameQuery;
 use Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = '0.22';
+$VERSION = '0.23';
 
 sub new
 {
@@ -30,11 +30,11 @@ sub new
 
         my $self = {'addresses' => \@rr,
                     'ttl' => $ttl,
-                    'AA' => $header[1] & 0x0400,
-                    'TC' => $header[1] & 0x0200,
-                    'RD' => $header[1] & 0x0100,
-                    'RA' => $header[1] & 0x0080,
-                    'B'  => $header[1] & 0x0010};
+                    'AA' => ($header[1] & 0x0400) ? 1 : 0,
+                    'TC' => ($header[1] & 0x0200) ? 1 : 0,
+                    'RD' => ($header[1] & 0x0100) ? 1 : 0,
+                    'RA' => ($header[1] & 0x0080) ? 1 : 0,
+                    'B'  => ($header[1] & 0x0010) ? 1 : 0};
         bless $self, $class;
         return $self;
     } else {

@@ -1,6 +1,17 @@
 Revision history for Net::NBName
 ================================
 
+*** 0.23 2002-12-22
+
+Changed the decoded Net::NBName::NameQuery flags to be 1 or 0,
+rather than just the masked value from the header word.
+
+Because the module is intended for querying NetBIOS hosts, a proper
+set of tests would require a known NetBIOS host. Unfortunately, there
+is no easy way of adding these to archives yet ;-) so I've added the
+'decode.t' tests to check that Net::NBName::NodeStatus and
+Net::NBName::NameQuery decode sample responses correctly.
+
 *** 0.22 2002-12-21
 
 Added the ->addresses accessor to Net::NBName::NameQuery and the

@@ -1,4 +1,4 @@
-# Last updated: 2002-12-21 23:30
+# Last updated: 2002-12-22 20:31
 
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ use Net::NBName::NodeStatus;
 use Net::NBName::NameQuery;
 
 use vars '$VERSION';
-$VERSION = "0.22";
+$VERSION = "0.23";
 
 sub new
 {

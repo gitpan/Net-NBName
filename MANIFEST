@@ -8,6 +8,7 @@ lib/Net/NBName/NodeStatus.pm
 lib/Net/NBName/NodeStatus/RR.pm
 README
 t/use.t
+t/decode.t
 bin/namequery.pl
 bin/nbtstat.pl
 bin/nbtscan.pl
