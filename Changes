@@ -1,6 +1,14 @@
 Revision history for Net::NBName
 ================================
 
+*** 0.25 2004-02-08
+
+Added a timeout parameter to the node_status and name_query methods.
+Updated the documentation to describe the new parameter.
+
+Changed the example script "namequery.pl" to accept the - character
+in NetBIOS names.
+
 *** 0.24 2003-01-16
 
 Changed the names of the example scripts "nbtstat.pl" and "nbtscan.pl"

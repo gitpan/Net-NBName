@@ -4,7 +4,7 @@ use warnings;
 package Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = "0.24";
+$VERSION = "0.25";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;
@@ -82,8 +82,8 @@ L<Net::NBName>, L<Net::NBName::NameQuery>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
-is free software; you can redistribute it and/or modify it under the same
-terms as Perl itself.
+Copyright (c) 2002, 2003, 2004 James Macfarlane. All rights reserved. This
+program is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
 
 =cut

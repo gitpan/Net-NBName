@@ -7,7 +7,7 @@ use Net::NBName::NodeStatus;
 use Net::NBName::NameQuery;
 
 use vars '$VERSION';
-$VERSION = "0.24";
+$VERSION = "0.25";
 
 sub new
 {
@@ -22,10 +22,11 @@ sub node_status
 {
     my $self = shift;
     my $host = shift;
+    my $timeout = shift;
 
     my $req = Net::NBName::Request->new;
     $req->data(0, "*", "\x00", 0, 0x21);
-    my $resp = $req->unicast($host);
+    my $resp = $req->unicast($host, $timeout);
     if ($resp) {
         my $ns = Net::NBName::NodeStatus->new($resp);
         return $ns;
@@ -41,14 +42,15 @@ sub name_query
     my $name = shift;
     my $suffix = shift;
     my $flags = shift || 0x0100;
+    my $timeout = shift;
 
     my $req = Net::NBName::Request->new;
     $req->data($flags, $name, ' ', $suffix, 0x20);
     my ($resp, $from_ip);
     if (defined($host)) {
-        $resp = $req->unicast($host);
+        $resp = $req->unicast($host, $timeout);
     } else {
-        ($resp, $from_ip) = $req->broadcast;
+        ($resp, $from_ip) = $req->broadcast($timeout);
     }
 
     if ($resp) {
@@ -109,6 +111,8 @@ sub unicast
 {
     my $self = shift;
     my $host = shift;
+    # Timeout should be 250ms according to RFC1002
+    my $timeout = shift || 0.25;
 
     my $data = $self->{data};
 
@@ -123,8 +127,7 @@ sub unicast
     my $rout;
     vec($rin, fileno(SOCK), 1) = 1;
 
-    # Timeout should be 250ms according to RFC1002
-    my ($nfound, $timeleft) = select($rout = $rin, undef, undef, 0.25);
+    my ($nfound, $timeleft) = select($rout = $rin, undef, undef, $timeout);
     if ($nfound) {
         my $resp;
         if (my $from_saddr = recv(SOCK, $resp, 2000, 0)) {
@@ -145,6 +148,9 @@ sub unicast
 sub broadcast
 {
     my $self = shift;
+    # Timeout should be 5s according to rfc1002 (but I've used 1s)
+    my $timeout = shift || 1;
+
     my $host = "255.255.255.255";
     my $data = $self->{data};
 
@@ -160,8 +166,7 @@ sub broadcast
     my $rout;
     vec($rin, fileno(SOCK), 1) = 1;
 
-    # Timeout should be 5s according to rfc1002 (but I've used 1s)
-    my ($nfound, $timeleft) = select($rout = $rin, undef, undef, 1);
+    my ($nfound, $timeleft) = select($rout = $rin, undef, undef, $timeout);
     if ($nfound) {
         my $resp;
         if (my $from_saddr = recv(SOCK, $resp, 2000, 0)) {
@@ -281,14 +286,17 @@ Name Service requests.
 
 =over 4
 
-=item $ns = $nb->node_status( $host )
+=item $ns = $nb->node_status( $host [, $timeout] )
 
 This will query the host for its node status. The response will
 be returned as a C<Net::NBName::NodeStatus> object.
 
 If no response is received from the host, the method will return undef.
 
-=item $nq = $nb->name_query( $host, $name, $suffix )
+You can also optionally specify the timeout in seconds for the node status
+request. The timeout defaults to .25 seconds.
+
+=item $nq = $nb->name_query( $host, $name, $suffix [, $flags [, $timeout] ] )
 
 This will query the host for the specified name. The response will
 be returned as a C<Net::NBName::NameQuery> object.
@@ -302,6 +310,13 @@ C<Net::NBName::NameQuery> object.
 
 If no response is received or a negative name query response is received,
 the method will return undef.
+
+You can override the flags in the NetBIOS name request, if you *really*
+want to. See the notes on Hacking Name Query Flags.
+
+You can also optionally specify the timeout in seconds for the name query
+request. It defaults to .25 seconds for unicast name queries and 1 second
+for broadcast name queries.
 
 =back
 
@@ -324,7 +339,7 @@ as <name>#<suffix> where the suffix should be in hex.
     my $nb = Net::NBName->new;
     my $param = shift;
     my $host = shift;
-    if ($param =~ /^(\w+)\#(\w{1,2})$/) {
+    if ($param =~ /^([\w-]+)\#(\w{1,2})$/) {
         my $name = $1;
         my $suffix = hex $2;
 
@@ -423,24 +438,20 @@ Multihomed are special groups that can include up to 25 IP addresses.
 
 =head2 Hacking Name Query Flags
 
-This section contains pretty obscure information, but I had to have it
-somewhere.
-
 NetBIOS Name Service Requests have a number of flags associated with them.
 These are set to sensible defaults by the code when sending node status
 and name query requests.
 
-However, it is possible to override these setting by calling the
+However, it is possible to override these settings by calling the
 name_query method of a C<Net::NBName> object with a fourth parameter:
 
-    $nb->name_query( $host, $name, $suffix, $flags);
+    $nb->name_query( $host, $name, $suffix, $flags );
 
 For a unicast name query, the flags default to 0x0100 which sets the RD
 (recursion desired) flag. For a broadcast name query, the flags default to
 0x0010 which sets the B (broadcast) flag.
 
-You can flip any of these bits to your heart's content, but there only seems to
-be merit in combining the RD and B flags:
+Experimentation gave the following results:
 
 =over 4
 
@@ -451,16 +462,17 @@ the queried name is not present.
 
 =item *
 
-If B is not set and the host is an NBNS server, the NBNS server will be used before the remote name table and you will get a negative response if the name
-is not present; if the host is not an NBNS server, you will get no response
-if the name is not present.
+If B is not set and the host is an NBNS server, the NBNS server will be used
+before the remote name table and you will get a negative response if the name
+is not present; if the host is not an NBNS server, you will get no response if
+the name is not present.
 
 =back
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
-is free software; you can redistribute it and/or modify it under the same
-terms as Perl itself.
+Copyright (c) 2002, 2003, 2004 James Macfarlane. All rights reserved. This
+program is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
 
 =cut

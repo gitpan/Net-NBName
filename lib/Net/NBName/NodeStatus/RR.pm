@@ -4,7 +4,7 @@ use warnings;
 package Net::NBName::NodeStatus::RR;
 
 use vars '$VERSION';
-$VERSION = "0.24";
+$VERSION = "0.25";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;
@@ -109,7 +109,7 @@ And the following name types are GROUP:
     0x00 Domain (Group)
     0x1C Domain Controllers (Special Group)
     0x1E Browser Elections (Group)
-    
+
 =item $rr->ONT
 
 Owner Node Type flag. Indicates if the systems are B, P, H, or M-node. It will
@@ -144,8 +144,8 @@ L<Net::NBName>, L<Net::NBName::NodeStatus>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002, 2003 James Macfarlane. All rights reserved. This program
-is free software; you can redistribute it and/or modify it under the same
-terms as Perl itself.
+Copyright (c) 2002, 2003, 2004 James Macfarlane. All rights reserved. This
+program is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
 
 =cut

@@ -4,7 +4,7 @@ use Net::NBName;
 my $nb = Net::NBName->new;
 my $param = shift;
 my $host = shift;
-if ($param =~ /^(\w+)\#(\w{1,2})$/) {
+if ($param =~ /^([\w-]+)\#(\w{1,2})$/) {
     my $name = $1;
     my $suffix = hex $2;
 
