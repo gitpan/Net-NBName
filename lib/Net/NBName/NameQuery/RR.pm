@@ -1,4 +1,4 @@
-# Last updated: 2002-12-04 21:37
+# Last updated: 2002-12-09 22:57
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 package Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = "0.20";
+$VERSION = "0.21";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;
