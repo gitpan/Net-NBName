@@ -1,4 +1,4 @@
-# Last updated: 2002-12-09 22:57
+# Last updated: 2002-12-21 22:43
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ package Net::NBName::NameQuery;
 use Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = '0.21';
+$VERSION = '0.22';
 
 sub new
 {
@@ -56,6 +56,7 @@ sub as_string
     return $string;
 }
 
+sub addresses { return @{$_[0]->{'addresses'}}; }
 sub ttl { return $_[0]->{'ttl'}; }
 sub RA { return $_[0]->{'RA'}; }
 

@@ -1,4 +1,4 @@
-# Last updated: 2002-12-09 22:57
+# Last updated: 2002-12-21 23:22
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 package Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = "0.21";
+$VERSION = "0.22";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;
@@ -15,7 +15,7 @@ sub new
 {
     my $class = shift;
     my $nb_data = shift;
-    my ($flags, $packed_address) = unpack("nA4", $nb_data);
+    my ($flags, $packed_address) = unpack("na4", $nb_data);
     my $address = join ".", unpack("C4", $packed_address);
 
     my $self = {};
@@ -37,6 +37,7 @@ sub as_string
         $self->{'ONT'};
 }
 
+sub address { return $_[0]->{'address'}; }
 sub G { return $_[0]->{'G'}; }
 sub ONT { return $_[0]->{'ONT'}; }
 

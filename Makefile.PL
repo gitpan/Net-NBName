@@ -9,4 +9,5 @@ WriteMakefile(
     (ABSTRACT => 'NetBIOS Name Service Requests',
      AUTHOR => 'James Macfarlane <jmacfarlane@goodweather.co.uk') : ()),
     # *.pm files will be automatically picked up from . or ./lib
+    'EXE_FILES' => ['bin/namequery.pl', 'bin/nbtstat.pl', 'bin/nbtscan.pl'],
 );

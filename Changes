@@ -1,6 +1,17 @@
 Revision history for Net::NBName
 ================================
 
+*** 0.22 2002-12-21
+
+Added the ->addresses accessor to Net::NBName::NameQuery and the
+->address accessor to Net::NBName::NameQuery::RR.
+
+Fixed bug in Net::NBName::NameQuery::RR incorrectly decoding name query
+response resource records by changing unpack "nA4" to unpack "na4".
+
+Included the three example scripts in the documentation for
+installation in the scripts directory.
+
 *** 0.21 2002-12-09
 
 Included a simple test so that 'make test' will work with this module.
