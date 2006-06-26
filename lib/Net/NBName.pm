@@ -7,7 +7,7 @@ use Net::NBName::NodeStatus;
 use Net::NBName::NameQuery;
 
 use vars '$VERSION';
-$VERSION = "0.25";
+$VERSION = "0.26";
 
 sub new
 {
@@ -391,8 +391,10 @@ that subnet.
     use Net::NBName;
     use Net::Netmask;
 
+    $mask = shift or die "expected: <subnet>\n";
+
     $nb = Net::NBName->new;
-    $subnet = Net::Netmask->new2(shift) or die "expected: <subnet>\n";
+    $subnet = Net::Netmask->new2($mask);
     for $ip ($subnet->enumerate) {
         print "$ip ";
         $ns = $nb->node_status($ip);

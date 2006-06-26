@@ -6,7 +6,7 @@ package Net::NBName::NameQuery;
 use Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = '0.25';
+$VERSION = '0.26';
 
 sub new
 {

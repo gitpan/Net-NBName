@@ -6,24 +6,30 @@ package Net::NBName::NodeStatus;
 use Net::NBName::NodeStatus::RR;
 
 use vars '$VERSION';
-$VERSION = "0.25";
+$VERSION = "0.26";
 
 sub new
 {
     my $class = shift;
     my $resp = shift;
 
-    my $num_names = unpack("C", substr($resp, 56));
-    my $name_data = substr($resp, 57);
-
     my @rr = ();
-    for (my $i = 0; $i < $num_names; $i++) {
-        my $rr_data = substr($name_data, 18*$i, 18);
-        push @rr, Net::NBName::NodeStatus::RR->new($rr_data);
-    }
+    my $mac_address = "";
 
-    my $mac_address = join "-", map { sprintf "%02X", $_ }
-        unpack("C*", substr($name_data, 18 * $num_names, 6));
+    # Don't attempt to extract any names or the mac address
+    # if the response is truncated
+    if (length($resp) > 56) {
+        my $num_names = unpack("C", substr($resp, 56));
+        my $name_data = substr($resp, 57);
+
+        for (my $i = 0; $i < $num_names; $i++) {
+            my $rr_data = substr($name_data, 18*$i, 18);
+            push @rr, Net::NBName::NodeStatus::RR->new($rr_data);
+        }
+
+        $mac_address = join "-", map { sprintf "%02X", $_ }
+            unpack("C*", substr($name_data, 18 * $num_names, 6));
+    }
 
     my $self = {'names' => \@rr, 'mac_address' => $mac_address};
     bless $self, $class;

@@ -3,7 +3,7 @@ use diagnostics;
 
 use Test;
 
-BEGIN { plan tests => 19 }
+BEGIN { plan tests => 22 }
 
 # Test Net::NBName::NodeStatus
 
@@ -38,6 +38,20 @@ for my $rr ($ns->names) {
 
 # check mac address decoded correctly
 ok($ns->mac_address, "00-1C-2B-3A-49-58");
+
+# Test Net::NBName::NodeStatus 2
+# Truncated response, as returned by HP LaserJet printers
+
+@data = qw(2b 5c 00 00 00 01 00 00 00 00 00 00 20 43 4b 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 00 00 21 00 01);
+
+$resp = pack "C*", map { hex } @data;
+
+$ns = Net::NBName::NodeStatus->new($resp);
+ok($ns); # $ns should be defined; undef indicates a problem decoding
+
+ok(scalar $ns->names, 0); # check names is an empty list
+
+ok($ns->mac_address, ""); # check the mac_address is an empty string
 
 # Test Net::NBName::NameQuery
 

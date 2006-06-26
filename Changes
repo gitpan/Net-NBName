@@ -1,6 +1,16 @@
 Revision history for Net::NBName
 ================================
 
+*** 0.26 2006-06-25
+
+Updated the Net::NBName::NodeStatus constructor to handle truncated node
+status responses without generating warning messages. Thanks to both
+Stuart Kendrick and Max Baker for reporting this. I've added Max Baker's
+sample response packet to the 'decode.t' tests.
+
+Changed the "nodescan.pl" script to check that a mask has been supplied
+before attempting to create a Net::Netmask object.
+
 *** 0.25 2004-02-08
 
 Added a timeout parameter to the node_status and name_query methods.

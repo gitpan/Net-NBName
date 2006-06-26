@@ -4,7 +4,7 @@ use warnings;
 package Net::NBName::NameQuery::RR;
 
 use vars '$VERSION';
-$VERSION = "0.25";
+$VERSION = "0.26";
 
 use vars '@nodetypes';
 @nodetypes = qw/B-node P-node M-node H-node/;

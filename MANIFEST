@@ -12,3 +12,4 @@ t/decode.t
 bin/namequery.pl
 bin/nodestat.pl
 bin/nodescan.pl
+META.yml                                 Module meta-data (added by MakeMaker)
